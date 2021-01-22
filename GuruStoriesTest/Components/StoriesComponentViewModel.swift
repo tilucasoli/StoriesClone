@@ -9,6 +9,11 @@ import UIKit
 
 class StoriesComponentViewModel {
     let imageCollection: [UIImage]
+
+    var count: Int {
+        return imageCollection.count
+    }
+    
     var currentItem = 0
 
     var currentImage: UIImage {

@@ -22,6 +22,8 @@ class StoriesComponent: UIView {
         return imageView
     }()
 
+    lazy var storiesProgressView = StoriesProgressBar(numberOfProgressBars: viewModel.count, frame: CGRect())
+
     init(imageCollection: [UIImage], frame: CGRect) {
         self.viewModel = StoriesComponentViewModel(imageCollection: imageCollection)
         super.init(frame: frame)
@@ -34,6 +36,22 @@ class StoriesComponent: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         addImageView()
+        addProgressView()
+        imageViewAutomaticProgress()
+
+    }
+
+    func imageViewAutomaticProgress() {
+        storiesProgressView.startProgressing(currentItemIndex: viewModel.currentItem, duration: 5) { wasForcedInterruption in
+            if wasForcedInterruption {
+                self.imageViewAutomaticProgress()
+            } else {
+                self.viewModel.nextItem()
+                self.imageView.image = self.viewModel.currentImage
+                self.imageViewAutomaticProgress()
+            }
+        }
+
     }
 
     @objc func tapAction(sender: UITapGestureRecognizer) {
@@ -42,9 +60,11 @@ class StoriesComponent: UIView {
         if sender.location(in: imageView).x > widthImageView {
             viewModel.nextItem()
             imageView.image = viewModel.currentImage
+            storiesProgressView.stopProgressing()
         } else {
             viewModel.previousItem()
             imageView.image = viewModel.currentImage
+            storiesProgressView.stopProgressing()
         }
     }
 
@@ -61,6 +81,18 @@ extension StoriesComponent: UIGestureRecognizerDelegate {
             imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             imageView.leftAnchor.constraint(equalTo: self.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: self.rightAnchor)
+        ])
+    }
+
+    func addProgressView() {
+        addSubview(storiesProgressView)
+        storiesProgressView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            storiesProgressView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -8),
+            storiesProgressView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
+            storiesProgressView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
+            storiesProgressView.heightAnchor.constraint(equalToConstant: 2)
         ])
     }
 }

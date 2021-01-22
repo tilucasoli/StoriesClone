@@ -15,6 +15,8 @@
 		03C1115F25BA16C5004F8EBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C1115D25BA16C5004F8EBB /* LaunchScreen.storyboard */; };
 		03C1116C25BA196A004F8EBB /* StoriesComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C1116B25BA196A004F8EBB /* StoriesComponent.swift */; };
 		03C9966925BA5F0700B6BCAF /* StoriesComponentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9966825BA5F0700B6BCAF /* StoriesComponentViewModel.swift */; };
+		03C9967025BB131300B6BCAF /* CustomProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9966F25BB131300B6BCAF /* CustomProgressBar.swift */; };
+		03C9967725BB50E900B6BCAF /* StoriesProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9967625BB50E900B6BCAF /* StoriesProgressBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		03C1116025BA16C5004F8EBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03C1116B25BA196A004F8EBB /* StoriesComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesComponent.swift; sourceTree = "<group>"; };
 		03C9966825BA5F0700B6BCAF /* StoriesComponentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesComponentViewModel.swift; sourceTree = "<group>"; };
+		03C9966F25BB131300B6BCAF /* CustomProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressBar.swift; sourceTree = "<group>"; };
+		03C9967625BB50E900B6BCAF /* StoriesProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,10 +79,20 @@
 		03C1116925BA1939004F8EBB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				03C9967325BB15F100B6BCAF /* Extensions */,
 				03C1116B25BA196A004F8EBB /* StoriesComponent.swift */,
+				03C9967625BB50E900B6BCAF /* StoriesProgressBar.swift */,
 				03C9966825BA5F0700B6BCAF /* StoriesComponentViewModel.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		03C9967325BB15F100B6BCAF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				03C9966F25BB131300B6BCAF /* CustomProgressBar.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,9 +188,11 @@
 			files = (
 				03C9966925BA5F0700B6BCAF /* StoriesComponentViewModel.swift in Sources */,
 				03C1116C25BA196A004F8EBB /* StoriesComponent.swift in Sources */,
+				03C9967025BB131300B6BCAF /* CustomProgressBar.swift in Sources */,
 				03C1115A25BA16C4004F8EBB /* GuruStoriesTest.xcdatamodeld in Sources */,
 				03C1115425BA16C4004F8EBB /* ViewController.swift in Sources */,
 				03C1115025BA16C4004F8EBB /* AppDelegate.swift in Sources */,
+				03C9967725BB50E900B6BCAF /* StoriesProgressBar.swift in Sources */,
 				03C1115225BA16C4004F8EBB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
