@@ -9,24 +9,43 @@ import UIKit
 
 class StoriesComponent: UIView {
 
-    let viewModel: StoriesComponentViewModel
+    var viewModel: StoriesComponentViewModel
+    weak var delegate: StoriesComponentDelegate?
+    var imageCollection: [UIImage]?
+    var transitionDuration: Double = 5
 
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = viewModel.currentImage
+        imageView.image = viewModel.newsList[0].photo
         imageView.isUserInteractionEnabled = true
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:)))
+        let longTapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longtapAction(sender:)))
+        longTapRecognizer.minimumPressDuration = 0.5
+        
         imageView.addGestureRecognizer(tapRecognizer)
+        imageView.addGestureRecognizer(longTapRecognizer)
 
         return imageView
     }()
 
-    lazy var storiesProgressView = StoriesProgressBar(numberOfProgressBars: viewModel.count, frame: CGRect())
+    lazy var progressViews: StoriesProgressView = {
+        let progressView = StoriesProgressView(numberOfProgressBars: viewModel.newsList.count, frame: CGRect())
+        progressView.numberOfProgressBars = viewModel.newsList.count
+        progressView.progressTintColor = .yellow
+        return progressView
+    }()
 
-    init(imageCollection: [UIImage], frame: CGRect) {
-        self.viewModel = StoriesComponentViewModel(imageCollection: imageCollection)
+    lazy var newsTitleLabel: StoriesLabel = {
+        let storiesLabel = StoriesLabel()
+        storiesLabel.titleLabel.text = viewModel.titleCurrentItem
+        return storiesLabel
+    }()
+
+    init(newsCollection: [News], frame: CGRect) {
+        self.viewModel = StoriesComponentViewModel(newsCollection: newsCollection)
         super.init(frame: frame)
+        viewModel.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -36,22 +55,10 @@ class StoriesComponent: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         addImageView()
-        addProgressView()
-        imageViewAutomaticProgress()
-
-    }
-
-    func imageViewAutomaticProgress() {
-        storiesProgressView.startProgressing(currentItemIndex: viewModel.currentItem, duration: 5) { wasForcedInterruption in
-            if wasForcedInterruption {
-                self.imageViewAutomaticProgress()
-            } else {
-                self.viewModel.nextItem()
-                self.imageView.image = self.viewModel.currentImage
-                self.imageViewAutomaticProgress()
-            }
-        }
-
+        addStoriesProgressView()
+        addNewsTitleLabel()
+        startAnimation()
+        
     }
 
     @objc func tapAction(sender: UITapGestureRecognizer) {
@@ -59,13 +66,40 @@ class StoriesComponent: UIView {
 
         if sender.location(in: imageView).x > widthImageView {
             viewModel.nextItem()
-            imageView.image = viewModel.currentImage
-            storiesProgressView.stopProgressing()
+            progressViews.stopProgressing()
         } else {
             viewModel.previousItem()
-            imageView.image = viewModel.currentImage
-            storiesProgressView.stopProgressing()
+            progressViews.stopProgressing()
         }
+    }
+
+    @objc func longtapAction(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            progressViews.pauseLayer()
+        } else if sender.state == .ended {
+            progressViews.resumeLayer()
+        }
+    }
+
+    func startAnimation() {
+        progressViews.startProgressing(currentItemIndex: viewModel.currentItem,
+                                       duration: transitionDuration) { wasForcedInterruption in
+            if wasForcedInterruption {
+                self.startAnimation()
+            } else {
+                self.viewModel.nextItem()
+                self.startAnimation()
+            }
+        }
+    }
+
+}
+
+// MARK: StoriesProgressViewDelegate
+extension StoriesComponent: StoriesComponentViewModelDelegate {
+
+    func setPhotoInImageView(in index: Int) {
+        imageView.image = viewModel.newsList[index].photo
     }
 
 }
@@ -84,15 +118,30 @@ extension StoriesComponent: UIGestureRecognizerDelegate {
         ])
     }
 
-    func addProgressView() {
-        addSubview(storiesProgressView)
-        storiesProgressView.translatesAutoresizingMaskIntoConstraints = false
+    func addStoriesProgressView() {
+        progressViews.draw(CGRect())
+        
+        addSubview(progressViews)
+        progressViews.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            storiesProgressView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -8),
-            storiesProgressView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
-            storiesProgressView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
-            storiesProgressView.heightAnchor.constraint(equalToConstant: 2)
+            progressViews.topAnchor.constraint(equalTo: (delegate?.view.safeAreaLayoutGuide.topAnchor)!),
+            progressViews.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
+            progressViews.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8),
+            progressViews.heightAnchor.constraint(equalToConstant: progressViews.height)
+        ])
+    }
+
+    func addNewsTitleLabel() {
+        newsTitleLabel.draw(CGRect())
+
+        addSubview(newsTitleLabel)
+        newsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            newsTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            newsTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor),
+            newsTitleLabel.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
     }
 }

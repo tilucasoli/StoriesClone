@@ -7,14 +7,16 @@
 
 import UIKit
 
-class StoriesProgressBar: UIStackView {
-    let numberOfProgressBars: Int
+class StoriesProgressView: UIStackView {
+
+    var numberOfProgressBars: Int
+    var height: CGFloat = 2
+    var progressTintColor: UIColor = .systemGreen
+    let trackTintColor: UIColor = .gray
 
     init(numberOfProgressBars: Int, frame: CGRect) {
         self.numberOfProgressBars = numberOfProgressBars
         super.init(frame: frame)
-        // draw doesnt work auto
-        draw(frame)
     }
 
     required init(coder: NSCoder) {
@@ -32,12 +34,12 @@ class StoriesProgressBar: UIStackView {
     }
 }
 
-extension StoriesProgressBar {
+extension StoriesProgressView {
     func progressViewFactory() -> UIProgressView {
         let progressView = UIProgressView(progressViewStyle: .bar)
-        progressView.progressTintColor = .systemGreen
-        progressView.trackTintColor = .gray
-        progressView.layer.cornerRadius = 2
+        progressView.progressTintColor = progressTintColor
+        progressView.trackTintColor = trackTintColor
+        progressView.layer.cornerRadius = height/2
         progressView.clipsToBounds = true
         return progressView
     }
@@ -49,11 +51,10 @@ extension StoriesProgressBar {
 
             stackView.addArrangedSubview(progressView)
         }
-
     }
 }
 
-extension StoriesProgressBar {
+extension StoriesProgressView {
     func startProgressing(currentItemIndex: Int, duration: Double, completionHandler: @escaping (Bool) -> Void) {
         guard let progressViewArray = arrangedSubviews as? [UIProgressView] else {
             return
@@ -91,5 +92,20 @@ extension StoriesProgressBar {
         progressViewArray.forEach({ view in
             view.layer.sublayers?.forEach { $0.removeAllAnimations()}
         })
+    }
+    
+    func pauseLayer() {
+        let pausedTime: CFTimeInterval = layer.convertTime(CACurrentMediaTime(), from: nil)
+        layer.speed = 0.0
+        layer.timeOffset = pausedTime
+    }
+
+    func resumeLayer() {
+        let pausedTime: CFTimeInterval = layer.timeOffset
+        layer.speed = 1.0
+        layer.timeOffset = 0.0
+        layer.beginTime = 0.0
+        let timeSincePause: CFTimeInterval = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        layer.beginTime = timeSincePause
     }
 }
