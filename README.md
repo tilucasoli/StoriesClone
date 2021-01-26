@@ -1,10 +1,12 @@
-# StoriesClone
-## Primeira Versão
-Primeirão, esse é aquele ponto de partida, contendo poucas features, mas definindo bastante sobre o projeto.
+# **StoriesClone**
 
-### features disponíveis
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e53bec0b-8d28-46a2-965d-16fa800d4a53/Captura_de_Tela_2021-01-26_as_14.27.35.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e53bec0b-8d28-46a2-965d-16fa800d4a53/Captura_de_Tela_2021-01-26_as_14.27.35.png)
 
-- [x] Poder passar fotos
-- [x] Poder retroceder
+## **Features disponíveis** 😁
 
-![Imagem primeira versão](https://user-images.githubusercontent.com/62367544/105435819-cce0a680-5c3c-11eb-9da4-372883351b67.png)
+- Passar notícias quando clicar na direita.
+- Voltar para a notícia anterior quando clica na esquerda.
+- Progress View com tempo; quando o tempo acaba passa para a próxima Notícia.
+- Ao clicar em cima do texto o usuario é enviado para o link da notícia.
+- Ao precionar pro alguns segundos a imagem a ProgressView para.
+- Ao passar, voltar ou segurar uma notícia o usuário recebe um feedback háptico.
