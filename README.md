@@ -1,6 +1,6 @@
 # **StoriesClone**
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e53bec0b-8d28-46a2-965d-16fa800d4a53/Captura_de_Tela_2021-01-26_as_14.27.35.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e53bec0b-8d28-46a2-965d-16fa800d4a53/Captura_de_Tela_2021-01-26_as_14.27.35.png)
+![component](https://user-images.githubusercontent.com/62367544/105884198-7a114100-5fe6-11eb-8522-12d874179a0f.png)
+![SafariController](https://user-images.githubusercontent.com/62367544/105883845-138c2300-5fe6-11eb-9112-4c33fa1a89e6.png)
 
 ## **Features disponíveis** 😁
 
