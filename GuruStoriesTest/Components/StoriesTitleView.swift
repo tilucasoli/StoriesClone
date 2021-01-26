@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StoriesLabel: UIView, UIGestureRecognizerDelegate {
+class StoriesTitleView: UIView, UIGestureRecognizerDelegate {
     let height: CGFloat = 72.5
 
     let titleLabel: UILabel = {
@@ -31,7 +31,7 @@ class StoriesLabel: UIView, UIGestureRecognizerDelegate {
 
 }
 
-extension StoriesLabel {
+extension StoriesTitleView {
     func addGradient(layer: CALayer) {
         let gradient: CAGradientLayer = CAGradientLayer()
 
@@ -45,7 +45,7 @@ extension StoriesLabel {
     }
 }
 
-extension StoriesLabel {
+extension StoriesTitleView {
     func addTitleLabel() {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
