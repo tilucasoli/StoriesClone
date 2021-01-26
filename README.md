@@ -1,4 +1,4 @@
-# GuruStoriesClone
+# StoriesClone
 ## Primeira Versão
 Primeirão, esse é aquele ponto de partida, contendo poucas features, mas definindo bastante sobre o projeto.
 
