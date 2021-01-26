@@ -15,16 +15,8 @@ class StoriesComponent: UIView {
     var imageCollection: [StoriesImage] = [] {
         didSet {
             if imageCollection.count == viewModel.newsList.count {
-
-                activityIndicator.stopAnimating()
-
                 imageCollection.sort(by: {$0.index<$1.index})
-                imageView.image = imageCollection[0].image
-
-                newsTitleLabel.isHidden = false
-                progressViews.isHidden = false
-
-                startAnimation()
+                startStoriesComponent()
             }
         }
     }
@@ -35,9 +27,9 @@ class StoriesComponent: UIView {
         let imageView = UIImageView()
         imageView.isUserInteractionEnabled = true
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:)))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImageViewAction(sender:)))
         let longTapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longtapAction(sender:)))
-        longTapRecognizer.minimumPressDuration = 0.3
+        longTapRecognizer.minimumPressDuration = 0.2
 
         imageView.addGestureRecognizer(tapRecognizer)
         imageView.addGestureRecognizer(longTapRecognizer)
@@ -47,17 +39,16 @@ class StoriesComponent: UIView {
 
     lazy var activityIndicator = UIActivityIndicatorView.init(style: .large)
 
-    lazy var progressViews: StoriesProgressView = {
-        let progressView = StoriesProgressView(numberOfProgressBars: viewModel.newsList.count, frame: CGRect())
-        progressView.numberOfProgressBars = viewModel.newsList.count
-        progressView.progressTintColor = .yellow
-        return progressView
-    }()
+    lazy var progressViews = StoriesProgressView(numberOfProgressBars: viewModel.newsList.count, frame: CGRect())
 
-    lazy var newsTitleLabel: StoriesLabel = {
-        let storiesLabel = StoriesLabel()
-        storiesLabel.titleLabel.text = viewModel.titleCurrentItem
-        return storiesLabel
+    lazy var titleView: StoriesTitleView = {
+        let storiesTitleView = StoriesTitleView()
+        storiesTitleView.isUserInteractionEnabled = true
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapTitleViewAction(sender:)))
+        storiesTitleView.addGestureRecognizer(tapRecognizer)
+
+        return storiesTitleView
     }()
 
     init(newsCollection: [News], frame: CGRect) {
@@ -68,7 +59,7 @@ class StoriesComponent: UIView {
         viewModel.delegate = self
 
         activityIndicator.startAnimating()
-        newsTitleLabel.isHidden = true
+        titleView.isHidden = true
         progressViews.isHidden = true
     }
 
@@ -81,10 +72,10 @@ class StoriesComponent: UIView {
         addImageView()
         addActivityIndicator()
         addStoriesProgressView()
-        addNewsTitleLabel()
+        addTitleView()
     }
 
-    @objc func tapAction(sender: UITapGestureRecognizer) {
+    @objc func tapImageViewAction(sender: UITapGestureRecognizer) {
         let widthImageView = imageView.frame.width/2
 
         if sender.location(in: imageView).x > widthImageView {
@@ -96,6 +87,10 @@ class StoriesComponent: UIView {
         }
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
+    }
+
+    @objc func tapTitleViewAction(sender: UITapGestureRecognizer) {
+        delegate?.presentSafari(string: viewModel.newsList[viewModel.currentItem].link)
     }
 
     @objc func longtapAction(sender: UILongPressGestureRecognizer) {
@@ -112,6 +107,10 @@ class StoriesComponent: UIView {
 
     }
 
+}
+
+// MARK: ViewLogic
+extension StoriesComponent {
     func startAnimation() {
         progressViews.startProgressing(currentItemIndex: viewModel.currentItem,
                                        duration: transitionDuration) { wasForcedInterruption in
@@ -125,6 +124,16 @@ class StoriesComponent: UIView {
         }
     }
 
+    func startStoriesComponent() {
+        activityIndicator.stopAnimating()
+
+        setNews(index: 0)
+
+        titleView.isHidden = false
+        progressViews.isHidden = false
+
+        startAnimation()
+    }
 }
 
 // MARK: StoriesProgressViewDelegate
@@ -138,16 +147,16 @@ extension StoriesComponent: StoriesComponentViewModelDelegate {
     func setNews(index: Int) {
 
         UIView.transition(with: imageView,
-                          duration: 0.50,
+                          duration: 0.3,
                           options: [.curveEaseInOut, .transitionCrossDissolve],
                           animations: {
                             self.imageView.image = self.imageCollection[index].image
                           })
 
         UIView.animate(withDuration: 1, animations: {
-            self.newsTitleLabel.titleLabel.alpha = 0.1
-            self.newsTitleLabel.titleLabel.alpha = 1
-            self.newsTitleLabel.titleLabel.text = self.viewModel.newsList[index].title
+            self.titleView.titleLabel.alpha = 0
+            self.titleView.titleLabel.alpha = 1
+            self.titleView.titleLabel.text = self.viewModel.newsList[index].title
         })
 
     }
@@ -190,14 +199,14 @@ extension StoriesComponent: UIGestureRecognizerDelegate {
         ])
     }
 
-    func addNewsTitleLabel() {
-        addSubview(newsTitleLabel)
-        newsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    func addTitleView() {
+        addSubview(titleView)
+        titleView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            newsTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            newsTitleLabel.leftAnchor.constraint(equalTo: self.leftAnchor),
-            newsTitleLabel.rightAnchor.constraint(equalTo: self.rightAnchor)
+            titleView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            titleView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            titleView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
     }
 }
