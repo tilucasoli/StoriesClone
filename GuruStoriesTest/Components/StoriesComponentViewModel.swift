@@ -13,7 +13,7 @@ protocol StoriesComponentViewModelDelegate: class {
 }
 
 class StoriesComponentViewModel {
-    let newsList: [News]
+    var newsList: [News]
     weak var delegate: StoriesComponentViewModelDelegate?
 
     var currentItem = 0
@@ -22,7 +22,11 @@ class StoriesComponentViewModel {
     }
 
     init(newsCollection: [News]) {
-        self.newsList = newsCollection
+
+        let nonPriority = newsCollection.filter({!$0.isPriority})
+        let priority = newsCollection.filter({$0.isPriority})
+        self.newsList = priority + nonPriority
+
         fetchImages()
     }
 

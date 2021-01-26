@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		037CAC2C25BDB128009326A1 /* StoriesComponentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CAC2B25BDB128009326A1 /* StoriesComponentDelegate.swift */; };
 		037CAC4625BDE85E009326A1 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CAC4525BDE85E009326A1 /* News.swift */; };
-		037CAC4E25BDF90B009326A1 /* StoriesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CAC4D25BDF90B009326A1 /* StoriesLabel.swift */; };
+		037CAC4E25BDF90B009326A1 /* StoriesTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CAC4D25BDF90B009326A1 /* StoriesTitleView.swift */; };
 		037CAC5A25BF298E009326A1 /* message.json in Resources */ = {isa = PBXBuildFile; fileRef = 037CAC5925BF298E009326A1 /* message.json */; };
 		037CAC6925BF5840009326A1 /* StoriesImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CAC6825BF5840009326A1 /* StoriesImage.swift */; };
+		037CACC225C06B87009326A1 /* StoriesComponentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CACC125C06B87009326A1 /* StoriesComponentViewModelTests.swift */; };
+		037CACC625C072F6009326A1 /* StoriesProgressViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CACC525C072F6009326A1 /* StoriesProgressViewTests.swift */; };
 		03C1115025BA16C4004F8EBB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C1114F25BA16C4004F8EBB /* AppDelegate.swift */; };
 		03C1115225BA16C4004F8EBB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C1115125BA16C4004F8EBB /* SceneDelegate.swift */; };
 		03C1115425BA16C4004F8EBB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C1115325BA16C4004F8EBB /* ViewController.swift */; };
@@ -23,13 +25,27 @@
 		03C9967725BB50E900B6BCAF /* StoriesProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9967625BB50E900B6BCAF /* StoriesProgressView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		037CACAC25C063EB009326A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03C1114425BA16C4004F8EBB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C1114B25BA16C4004F8EBB;
+			remoteInfo = GuruStoriesTest;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		037CAC2B25BDB128009326A1 /* StoriesComponentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesComponentDelegate.swift; sourceTree = "<group>"; };
 		037CAC4525BDE85E009326A1 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
-		037CAC4D25BDF90B009326A1 /* StoriesLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesLabel.swift; sourceTree = "<group>"; };
+		037CAC4D25BDF90B009326A1 /* StoriesTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesTitleView.swift; sourceTree = "<group>"; };
 		037CAC5925BF298E009326A1 /* message.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = message.json; sourceTree = "<group>"; };
 		037CAC6825BF5840009326A1 /* StoriesImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesImage.swift; sourceTree = "<group>"; };
-		03C1114C25BA16C4004F8EBB /* GuruStoriesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuruStoriesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		037CACA725C063EB009326A1 /* GuruStoriesTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GuruStoriesTestTests.xctest; path = "/Users/lucasoliveira/Documents/projetos/GuruStoriesClone/build/Debug-iphoneos/GuruStoriesTestTests.xctest"; sourceTree = "<absolute>"; };
+		037CACAB25C063EB009326A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		037CACC125C06B87009326A1 /* StoriesComponentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesComponentViewModelTests.swift; sourceTree = "<group>"; };
+		037CACC525C072F6009326A1 /* StoriesProgressViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesProgressViewTests.swift; sourceTree = "<group>"; };
+		03C1114C25BA16C4004F8EBB /* GuruStoriesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GuruStoriesTest.app; path = "/Users/lucasoliveira/Documents/projetos/GuruStoriesClone/build/Debug-iphoneos/GuruStoriesTest.app"; sourceTree = "<absolute>"; };
 		03C1114F25BA16C4004F8EBB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03C1115125BA16C4004F8EBB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		03C1115325BA16C4004F8EBB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +59,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		037CACA425C063EB009326A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C1114925BA16C4004F8EBB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,20 +92,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		037CACA825C063EB009326A1 /* GuruStoriesTestTests */ = {
+			isa = PBXGroup;
+			children = (
+				037CACC125C06B87009326A1 /* StoriesComponentViewModelTests.swift */,
+				037CACC525C072F6009326A1 /* StoriesProgressViewTests.swift */,
+				037CACAB25C063EB009326A1 /* Info.plist */,
+			);
+			path = GuruStoriesTestTests;
+			sourceTree = "<group>";
+		};
 		03C1114325BA16C4004F8EBB = {
 			isa = PBXGroup;
 			children = (
 				03C1114E25BA16C4004F8EBB /* GuruStoriesTest */,
-				03C1114D25BA16C4004F8EBB /* Products */,
+				037CACA825C063EB009326A1 /* GuruStoriesTestTests */,
 			);
-			sourceTree = "<group>";
-		};
-		03C1114D25BA16C4004F8EBB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				03C1114C25BA16C4004F8EBB /* GuruStoriesTest.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		03C1114E25BA16C4004F8EBB /* GuruStoriesTest */ = {
@@ -108,7 +133,7 @@
 				037CAC6825BF5840009326A1 /* StoriesImage.swift */,
 				037CAC2A25BDB0EB009326A1 /* Protocols */,
 				03C1116B25BA196A004F8EBB /* StoriesComponent.swift */,
-				037CAC4D25BDF90B009326A1 /* StoriesLabel.swift */,
+				037CAC4D25BDF90B009326A1 /* StoriesTitleView.swift */,
 				03C9966825BA5F0700B6BCAF /* StoriesComponentViewModel.swift */,
 				03C9967625BB50E900B6BCAF /* StoriesProgressView.swift */,
 			);
@@ -118,6 +143,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		037CACA625C063EB009326A1 /* GuruStoriesTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 037CACAE25C063EB009326A1 /* Build configuration list for PBXNativeTarget "GuruStoriesTestTests" */;
+			buildPhases = (
+				037CACA325C063EB009326A1 /* Sources */,
+				037CACA425C063EB009326A1 /* Frameworks */,
+				037CACA525C063EB009326A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				037CACAD25C063EB009326A1 /* PBXTargetDependency */,
+			);
+			name = GuruStoriesTestTests;
+			productName = GuruStoriesTestTests;
+			productReference = 037CACA725C063EB009326A1 /* GuruStoriesTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		03C1114B25BA16C4004F8EBB /* GuruStoriesTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03C1116325BA16C5004F8EBB /* Build configuration list for PBXNativeTarget "GuruStoriesTest" */;
@@ -145,12 +188,16 @@
 				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
+					037CACA625C063EB009326A1 = {
+						CreatedOnToolsVersion = 12.3;
+						TestTargetID = 03C1114B25BA16C4004F8EBB;
+					};
 					03C1114B25BA16C4004F8EBB = {
 						CreatedOnToolsVersion = 12.3;
 					};
 				};
 			};
-			buildConfigurationList = 03C1114725BA16C4004F8EBB /* Build configuration list for PBXProject "GuruStoriesTest" */;
+			buildConfigurationList = 03C1114725BA16C4004F8EBB /* Build configuration list for PBXProject "StoriesClone" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,16 +206,24 @@
 				Base,
 			);
 			mainGroup = 03C1114325BA16C4004F8EBB;
-			productRefGroup = 03C1114D25BA16C4004F8EBB /* Products */;
+			productRefGroup = 03C1114325BA16C4004F8EBB;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				03C1114B25BA16C4004F8EBB /* GuruStoriesTest */,
+				037CACA625C063EB009326A1 /* GuruStoriesTestTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		037CACA525C063EB009326A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C1114A25BA16C4004F8EBB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,6 +258,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		037CACA325C063EB009326A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				037CACC225C06B87009326A1 /* StoriesComponentViewModelTests.swift in Sources */,
+				037CACC625C072F6009326A1 /* StoriesProgressViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C1114825BA16C4004F8EBB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,12 +280,20 @@
 				037CAC4625BDE85E009326A1 /* News.swift in Sources */,
 				03C9967725BB50E900B6BCAF /* StoriesProgressView.swift in Sources */,
 				03C1115225BA16C4004F8EBB /* SceneDelegate.swift in Sources */,
-				037CAC4E25BDF90B009326A1 /* StoriesLabel.swift in Sources */,
+				037CAC4E25BDF90B009326A1 /* StoriesTitleView.swift in Sources */,
 				037CAC2C25BDB128009326A1 /* StoriesComponentDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		037CACAD25C063EB009326A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03C1114B25BA16C4004F8EBB /* GuruStoriesTest */;
+			targetProxy = 037CACAC25C063EB009326A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		03C1115D25BA16C5004F8EBB /* LaunchScreen.storyboard */ = {
@@ -235,6 +307,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		037CACAF25C063EB009326A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NRBAKMQ3;
+				INFOPLIST_FILE = GuruStoriesTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Apple-academy.GuruStoriesTestTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GuruStoriesTest.app/GuruStoriesTest";
+			};
+			name = Debug;
+		};
+		037CACB025C063EB009326A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NRBAKMQ3;
+				INFOPLIST_FILE = GuruStoriesTestTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Apple-academy.GuruStoriesTestTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GuruStoriesTest.app/GuruStoriesTest";
+			};
+			name = Release;
+		};
 		03C1116125BA16C5004F8EBB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -392,7 +504,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		03C1114725BA16C4004F8EBB /* Build configuration list for PBXProject "GuruStoriesTest" */ = {
+		037CACAE25C063EB009326A1 /* Build configuration list for PBXNativeTarget "GuruStoriesTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				037CACAF25C063EB009326A1 /* Debug */,
+				037CACB025C063EB009326A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03C1114725BA16C4004F8EBB /* Build configuration list for PBXProject "StoriesClone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03C1116125BA16C5004F8EBB /* Debug */,

@@ -6,27 +6,66 @@
 //
 
 import XCTest
+@testable import GuruStoriesTest
 
 class StoriesComponentViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    let newsArray = [News(title: "TitleTest", origin: .guru, link: "google.com",
+                         externalLink: nil, isPriority: true, image: "1",
+                         published: "1"),
+                    News(title: "TitleTest2", origin: .suno, link: "google.com",
+                         externalLink: nil, isPriority: true, image: "2",
+                         published: "1")]
+
+    func test_SCViewModel_titleCurrentItem() {
+
+        let sut = StoriesComponentViewModel(newsCollection: newsArray)
+
+        let output = sut.titleCurrentItem
+
+        XCTAssertEqual(output, "TitleTest")
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_SCViewModel_nextItem_if() {
+
+        let sut = StoriesComponentViewModel(newsCollection: newsArray)
+
+        sut.currentItem = 1
+        sut.nextItem()
+
+        let output = sut.currentItem
+
+        XCTAssertEqual(output, 0)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_SCViewModel_nextItem_else() {
+
+        let sut = StoriesComponentViewModel(newsCollection: newsArray)
+
+        sut.nextItem()
+        let output = sut.currentItem
+
+        XCTAssertEqual(output, 1)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func test_SCViewModel_previousItem_if() {
+
+        let sut = StoriesComponentViewModel(newsCollection: newsArray)
+        sut.previousItem()
+
+        let output = sut.currentItem
+        XCTAssertEqual(output, 1)
+    }
+
+    func test_SCViewModel_previousItem_else() {
+
+        let sut = StoriesComponentViewModel(newsCollection: newsArray)
+        sut.currentItem = 1
+        sut.previousItem()
+
+        let output = sut.currentItem
+
+        XCTAssertEqual(output, 0)
     }
 
 }

@@ -6,27 +6,57 @@
 //
 
 import XCTest
+@testable import GuruStoriesTest
 
 class StoriesProgressViewTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    func test_StoriesProgressView_startProgressing_WithIndex0() {
+        let index = 0
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        let sut = StoriesProgressView(numberOfProgressBars: 3, frame: CGRect())
+        sut.startProgressing(currentItemIndex: index, duration: 0) {_ in
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
         }
+
+        let progressView = sut.arrangedSubviews[index] as? UIProgressView
+
+        let state = progressView?.progress
+
+        XCTAssertEqual(state, 1)
     }
 
+    func test_StoriesProgressView_startProgressing() {
+
+        let sut = StoriesProgressView(numberOfProgressBars: 3, frame: CGRect())
+        sut.startProgressing(currentItemIndex: 2, duration: 0) {_ in
+
+        }
+
+        let progressView = sut.arrangedSubviews[1] as? UIProgressView
+
+        let state = progressView?.progress
+
+        XCTAssertEqual(state, 1)
+    }
+
+    func test_StoriesProgressView_pauseLayer() {
+
+        let sut = StoriesProgressView(numberOfProgressBars: 3, frame: CGRect())
+        sut.pauseLayer()
+
+        let state = sut.layer.speed
+
+        XCTAssertEqual(state, 0)
+    }
+
+    func test_StoriesProgressView_resumeLayer() {
+
+        let sut = StoriesProgressView(numberOfProgressBars: 3, frame: CGRect())
+        sut.pauseLayer()
+        sut.resumeLayer()
+
+        let state = sut.layer.speed
+
+        XCTAssertEqual(state, 1)
+    }
 }

@@ -10,16 +10,18 @@ import UIKit
 class ViewController: UIViewController {
     var newsList = [News]()
 
-    lazy var stories = StoriesComponent(newsCollection: loadJson()!.items, frame: CGRect())
-//    lazy var stories: StoriesComponent = {
-//        let storiesComponent = StoriesComponent(newsCollection: [News](), frame: CGRect())
-//        storiesComponent.viewModel = StoriesComponentViewModel(newsCollection: loadJson()!.items)
-//        return storiesComponent
-//    }()
+    lazy var stories = StoriesComponent(newsCollection: newsList, frame: CGRect())
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+
+        guard let request = loadJson() else {
+            return
+        }
+
+        newsList = request.items
+
         stories.delegate = self
         addStoriesImageView()
         // Do any additional setup after loading the view.
@@ -30,7 +32,7 @@ class ViewController: UIViewController {
         stories.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            stories.heightAnchor.constraint(equalToConstant: 300),
+            stories.heightAnchor.constraint(equalToConstant: 350),
             stories.topAnchor.constraint(equalTo: view.topAnchor),
             stories.rightAnchor.constraint(equalTo: view.rightAnchor),
             stories.leftAnchor.constraint(equalTo: view.leftAnchor)
@@ -39,7 +41,6 @@ class ViewController: UIViewController {
     }
 }
 extension ViewController: StoriesComponentDelegate {
-
     func loadJson() -> NewsRequest? {
         let decoder = JSONDecoder()
         guard
