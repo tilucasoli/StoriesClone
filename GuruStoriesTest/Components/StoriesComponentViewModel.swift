@@ -8,7 +8,8 @@
 import Foundation
 
 protocol StoriesComponentViewModelDelegate: class {
-    func setPhotoInImageView(in index: Int)
+    func setNews(index: Int)
+    func addImage(index: Int, data: Data)
 }
 
 class StoriesComponentViewModel {
@@ -22,6 +23,7 @@ class StoriesComponentViewModel {
 
     init(newsCollection: [News]) {
         self.newsList = newsCollection
+        fetchImages()
     }
 
     func nextItem() {
@@ -30,7 +32,7 @@ class StoriesComponentViewModel {
         } else {
             currentItem += 1
         }
-        delegate?.setPhotoInImageView(in: currentItem)
+        delegate?.setNews(index: currentItem)
     }
 
     func previousItem() {
@@ -39,7 +41,26 @@ class StoriesComponentViewModel {
         } else {
             currentItem -= 1
         }
-        delegate?.setPhotoInImageView(in: currentItem)
+        delegate?.setNews(index: currentItem)
+    }
+
+    func fetchImages() {
+        DispatchQueue.main.async {
+            for index in 0..<self.newsList.count {
+                self.downloadImages(news: self.newsList[index], index: index)
+            }
+        }
+    }
+
+    func downloadImages(news: News, index: Int) {
+        let url = URL(string: news.image)!
+        URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+            if let data = data {
+                DispatchQueue.main.async {
+                    self?.delegate?.addImage(index: index, data: data)
+                }
+            }
+        }.resume()
     }
 
 }

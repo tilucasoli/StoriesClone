@@ -17,20 +17,15 @@ class StoriesProgressView: UIStackView {
     init(numberOfProgressBars: Int, frame: CGRect) {
         self.numberOfProgressBars = numberOfProgressBars
         super.init(frame: frame)
-    }
-
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-
         axis = .horizontal
         distribution = .fillEqually
         spacing = 8
 
         setupProgressViewsInsideStackView(self, numberOfProgressViews: numberOfProgressBars)
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -56,6 +51,7 @@ extension StoriesProgressView {
 
 extension StoriesProgressView {
     func startProgressing(currentItemIndex: Int, duration: Double, completionHandler: @escaping (Bool) -> Void) {
+        stopProgressing()
         guard let progressViewArray = arrangedSubviews as? [UIProgressView] else {
             return
         }

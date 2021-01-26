@@ -8,23 +8,24 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var newsList = [News]()
 
-//    let imageArray = [UIImage(named: "1")!, UIImage(named: "2")!, UIImage(named: "3")!,
-//                      UIImage(named: "4")!, UIImage(named: "5")!, UIImage(named: "6")!]
-
-    let newsList = [News(title: "O que o caso Jack Ma revela sobre a rígida regulação chinesa?", photo: UIImage(named: "1")!),
-                    News(title: "1", photo: UIImage(named: "2")!),
-                    News(title: "1", photo: UIImage(named: "3")!),
-                    News(title: "1", photo: UIImage(named: "4")!),
-                    News(title: "1", photo: UIImage(named: "5")!)]
-
-    lazy var stories = StoriesComponent(newsCollection: newsList, frame: CGRect())
+    lazy var stories = StoriesComponent(newsCollection: loadJson()!.items, frame: CGRect())
+//    lazy var stories: StoriesComponent = {
+//        let storiesComponent = StoriesComponent(newsCollection: [News](), frame: CGRect())
+//        storiesComponent.viewModel = StoriesComponentViewModel(newsCollection: loadJson()!.items)
+//        return storiesComponent
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         stories.delegate = self
+        addStoriesImageView()
+        // Do any additional setup after loading the view.
+    }
 
+    func addStoriesImageView() {
         view.addSubview(stories)
         stories.translatesAutoresizingMaskIntoConstraints = false
 
@@ -35,10 +36,20 @@ class ViewController: UIViewController {
             stories.leftAnchor.constraint(equalTo: view.leftAnchor)
 
         ])
-        // Do any additional setup after loading the view.
     }
-
 }
 extension ViewController: StoriesComponentDelegate {
+
+    func loadJson() -> NewsRequest? {
+        let decoder = JSONDecoder()
+        guard
+            let url = Bundle.main.url(forResource: "message", withExtension: "json"),
+            let data = try? Data(contentsOf: url),
+            let items = try? decoder.decode(NewsRequest.self, from: data)
+              else {
+            return nil
+        }
+        return items
+    }
 
 }

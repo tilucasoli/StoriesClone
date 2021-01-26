@@ -11,23 +11,41 @@ class StoriesComponent: UIView {
 
     var viewModel: StoriesComponentViewModel
     weak var delegate: StoriesComponentDelegate?
-    var imageCollection: [UIImage]?
+
+    var imageCollection: [StoriesImage] = [] {
+        didSet {
+            if imageCollection.count == viewModel.newsList.count {
+
+                activityIndicator.stopAnimating()
+
+                imageCollection.sort(by: {$0.index<$1.index})
+                imageView.image = imageCollection[0].image
+
+                newsTitleLabel.isHidden = false
+                progressViews.isHidden = false
+
+                startAnimation()
+            }
+        }
+    }
+
     var transitionDuration: Double = 5
 
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = viewModel.newsList[0].photo
         imageView.isUserInteractionEnabled = true
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:)))
         let longTapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longtapAction(sender:)))
-        longTapRecognizer.minimumPressDuration = 0.5
-        
+        longTapRecognizer.minimumPressDuration = 0.3
+
         imageView.addGestureRecognizer(tapRecognizer)
         imageView.addGestureRecognizer(longTapRecognizer)
 
         return imageView
     }()
+
+    lazy var activityIndicator = UIActivityIndicatorView.init(style: .large)
 
     lazy var progressViews: StoriesProgressView = {
         let progressView = StoriesProgressView(numberOfProgressBars: viewModel.newsList.count, frame: CGRect())
@@ -44,8 +62,14 @@ class StoriesComponent: UIView {
 
     init(newsCollection: [News], frame: CGRect) {
         self.viewModel = StoriesComponentViewModel(newsCollection: newsCollection)
+
         super.init(frame: frame)
+
         viewModel.delegate = self
+
+        activityIndicator.startAnimating()
+        newsTitleLabel.isHidden = true
+        progressViews.isHidden = true
     }
 
     required init?(coder: NSCoder) {
@@ -55,10 +79,9 @@ class StoriesComponent: UIView {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         addImageView()
+        addActivityIndicator()
         addStoriesProgressView()
         addNewsTitleLabel()
-        startAnimation()
-        
     }
 
     @objc func tapAction(sender: UITapGestureRecognizer) {
@@ -71,6 +94,8 @@ class StoriesComponent: UIView {
             viewModel.previousItem()
             progressViews.stopProgressing()
         }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
     }
 
     @objc func longtapAction(sender: UILongPressGestureRecognizer) {
@@ -79,6 +104,12 @@ class StoriesComponent: UIView {
         } else if sender.state == .ended {
             progressViews.resumeLayer()
         }
+        
+        if !(sender.state == .changed) {
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
+
     }
 
     func startAnimation() {
@@ -86,6 +117,7 @@ class StoriesComponent: UIView {
                                        duration: transitionDuration) { wasForcedInterruption in
             if wasForcedInterruption {
                 self.startAnimation()
+                self.progressViews.layoutIfNeeded()
             } else {
                 self.viewModel.nextItem()
                 self.startAnimation()
@@ -97,9 +129,27 @@ class StoriesComponent: UIView {
 
 // MARK: StoriesProgressViewDelegate
 extension StoriesComponent: StoriesComponentViewModelDelegate {
+    func addImage(index: Int, data: Data) {
+        let image = UIImage(data: data)!
+        let newStoriesImage = StoriesImage(index: index, image: image)
+        imageCollection.append(newStoriesImage)
+    }
 
-    func setPhotoInImageView(in index: Int) {
-        imageView.image = viewModel.newsList[index].photo
+    func setNews(index: Int) {
+
+        UIView.transition(with: imageView,
+                          duration: 0.50,
+                          options: [.curveEaseInOut, .transitionCrossDissolve],
+                          animations: {
+                            self.imageView.image = self.imageCollection[index].image
+                          })
+
+        UIView.animate(withDuration: 1, animations: {
+            self.newsTitleLabel.titleLabel.alpha = 0.1
+            self.newsTitleLabel.titleLabel.alpha = 1
+            self.newsTitleLabel.titleLabel.text = self.viewModel.newsList[index].title
+        })
+
     }
 
 }
@@ -118,9 +168,17 @@ extension StoriesComponent: UIGestureRecognizerDelegate {
         ])
     }
 
+    func addActivityIndicator() {
+        addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+
     func addStoriesProgressView() {
-        progressViews.draw(CGRect())
-        
         addSubview(progressViews)
         progressViews.translatesAutoresizingMaskIntoConstraints = false
 
@@ -133,8 +191,6 @@ extension StoriesComponent: UIGestureRecognizerDelegate {
     }
 
     func addNewsTitleLabel() {
-        newsTitleLabel.draw(CGRect())
-
         addSubview(newsTitleLabel)
         newsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
