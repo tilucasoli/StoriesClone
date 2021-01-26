@@ -8,13 +8,24 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var newsList = [News]()
 
-    let stories = StoriesComponent(imageCollection: [UIImage(named: "1")!, UIImage(named: "2")!, UIImage(named: "3")!], frame: CGRect())
+    lazy var stories = StoriesComponent(newsCollection: loadJson()!.items, frame: CGRect())
+//    lazy var stories: StoriesComponent = {
+//        let storiesComponent = StoriesComponent(newsCollection: [News](), frame: CGRect())
+//        storiesComponent.viewModel = StoriesComponentViewModel(newsCollection: loadJson()!.items)
+//        return storiesComponent
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        stories.delegate = self
+        addStoriesImageView()
+        // Do any additional setup after loading the view.
+    }
 
+    func addStoriesImageView() {
         view.addSubview(stories)
         stories.translatesAutoresizingMaskIntoConstraints = false
 
@@ -22,9 +33,23 @@ class ViewController: UIViewController {
             stories.heightAnchor.constraint(equalToConstant: 300),
             stories.topAnchor.constraint(equalTo: view.topAnchor),
             stories.rightAnchor.constraint(equalTo: view.rightAnchor),
-            stories.leftAnchor.constraint(equalTo: view.leftAnchor),
+            stories.leftAnchor.constraint(equalTo: view.leftAnchor)
+
         ])
-        // Do any additional setup after loading the view.
+    }
+}
+extension ViewController: StoriesComponentDelegate {
+
+    func loadJson() -> NewsRequest? {
+        let decoder = JSONDecoder()
+        guard
+            let url = Bundle.main.url(forResource: "message", withExtension: "json"),
+            let data = try? Data(contentsOf: url),
+            let items = try? decoder.decode(NewsRequest.self, from: data)
+              else {
+            return nil
+        }
+        return items
     }
 
 }

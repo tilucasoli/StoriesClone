@@ -5,43 +5,62 @@
 //  Created by Lucas Oliveira on 21/01/21.
 //
 
-import UIKit
+import Foundation
+
+protocol StoriesComponentViewModelDelegate: class {
+    func setNews(index: Int)
+    func addImage(index: Int, data: Data)
+}
 
 class StoriesComponentViewModel {
-    let imageCollection: [UIImage]
-    var currentItem = 0
+    let newsList: [News]
+    weak var delegate: StoriesComponentViewModelDelegate?
 
-    var currentImage: UIImage {
-        return imageCollection[currentItem]
+    var currentItem = 0
+    var titleCurrentItem: String {
+        return newsList[currentItem].title
     }
 
-    init(imageCollection: [UIImage]) {
-        self.imageCollection = imageCollection
+    init(newsCollection: [News]) {
+        self.newsList = newsCollection
+        fetchImages()
     }
 
     func nextItem() {
-        if currentItem == imageCollection.count - 1 {
+        if currentItem == newsList.count - 1 {
             currentItem = 0
         } else {
             currentItem += 1
         }
+        delegate?.setNews(index: currentItem)
     }
 
     func previousItem() {
         if currentItem == 0 {
-            currentItem = imageCollection.count - 1
+            currentItem = newsList.count - 1
         } else {
             currentItem -= 1
         }
+        delegate?.setNews(index: currentItem)
+    }
+
+    func fetchImages() {
+        DispatchQueue.main.async {
+            for index in 0..<self.newsList.count {
+                self.downloadImages(news: self.newsList[index], index: index)
+            }
+        }
+    }
+
+    func downloadImages(news: News, index: Int) {
+        let url = URL(string: news.image)!
+        URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+            if let data = data {
+                DispatchQueue.main.async {
+                    self?.delegate?.addImage(index: index, data: data)
+                }
+            }
+        }.resume()
     }
 
 }
-//func nextItem(currentIndex: Int, array: [Any]) -> Int {
-//    if currentIndex == array.count - 1 {
-//        currentItem = 0
-//        return currentItem
-//    } else {
-//        currentItem += 1
-//        return currentItem
-//    }
-//}
