@@ -9,12 +9,10 @@ import UIKit
 
 import Foundation
 
-// MARK: - News
 struct NewsRequest: Codable {
     let items: [News]
 }
 
-// MARK: - Item
 struct News: Codable {
     let title: String
     let origin: Origin
